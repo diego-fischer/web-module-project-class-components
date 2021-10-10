@@ -1,14 +1,20 @@
 import React from 'react'
-impr
+import { Typography } from '@mui/material'
 
 class Todo extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {  }
-	}
-	render() { 
-		return (  );
-	}
+  render() {
+    return (
+      <Typography
+        style={{
+          textDecoration:
+            this.props.completed === true ? 'line-through' : 'none',
+        }}
+        onClick={() => this.props.markItemCompleted(this.props.id)}
+      >
+        {this.props.task}
+      </Typography>
+    )
+  }
 }
- 
-export default Todo;
+
+export default Todo

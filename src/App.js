@@ -29,16 +29,59 @@ class App extends React.Component {
     }
   }
 
+  addItem = (newItem, clearInputText) => {
+    const newObj = {
+      task: newItem,
+      id: Date.now(),
+      completed: false,
+    }
+    this.setState({
+      items: [...this.state.items, newObj],
+    })
+    clearInputText()
+  }
+
+  markItemCompleted = (id) => {
+    this.setState({
+      items: this.state.items.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            completed: !item.completed,
+          }
+        } else {
+          return item
+        }
+      }),
+    })
+  }
+
+  clearCompleted = () => {
+    this.setState({
+      items: this.state.items.filter((item) => !item.completed),
+    })
+  }
+
   render() {
     return (
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Container style={{ display: 'flex', flexDirection: 'column' }}>
-          <Typography variant='h2' style={{ margin: '100px 0 100px 0' }}>
+          <Typography
+            variant='h2'
+            style={{ margin: '100px 0 100px 0', fontWeight: 'bold' }}
+          >
             Todo List: MVP
           </Typography>
-          <TodoForm />
-          <TodoList />
+          <TodoForm
+            items={this.state.items}
+            addItem={this.addItem}
+            clearCompleted={this.clearCompleted}
+          />
+          <TodoList
+            items={this.state.items}
+            markItemCompleted={this.markItemCompleted}
+          />
         </Container>
       </ThemeProvider>
     )

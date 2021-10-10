@@ -3,10 +3,22 @@ import { Box, Button, TextField, Typography } from '@mui/material'
 
 class TodoForm extends React.Component {
   constructor(props) {
-    super(props)
-    this.state = {}
+    super()
+    this.state = {
+      newItem: '',
+    }
   }
+
+  handleInputTextChange = (e) => {
+    this.setState({ newItem: e.target.value })
+  }
+
+  clearInputText = () => {
+    this.setState({ newItem: '' })
+  }
+
   render() {
+    console.log('TODO FORM PROPS', this.props)
     return (
       <Box
         style={{
@@ -28,18 +40,26 @@ class TodoForm extends React.Component {
           <TextField
             id='new-item'
             label='New Item'
-            defaultValue=''
+            value={this.state.newItem}
             style={{ width: '60%', margin: '0 30px 0 0' }}
+            onChange={this.handleInputTextChange}
           />
           <Button
             variant='contained'
+            name='addBtn'
             style={{ margin: '0 30px 0 0 ', width: '250px' }}
+            onClick={() =>
+              this.props.addItem(this.state.newItem, this.clearInputText)
+            }
           >
             Add Todo
           </Button>
+
           <Button
             variant='contained'
+            name='clearCompletedBtn'
             style={{ margin: '0 30px 0 0 ', width: '250px' }}
+            onClick={this.props.clearCompleted}
           >
             Clear Completed
           </Button>

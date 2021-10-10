@@ -1,13 +1,24 @@
 import React from 'react'
-import { Typography, CssBaseline } from '@mui/material'
+import { Box, Typography } from '@mui/material'
+import Todo from './Todo'
 
 class TodoList extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {}
-  }
   render() {
-    return <Typography variant='h4'>TodoList</Typography>
+    return (
+      <Box>
+        <Typography variant='h4'>TodoList</Typography>
+
+        {this.props.items.map((item) => (
+          <Todo
+            key={item.id}
+            id={item.id}
+            task={item.task}
+            completed={item.completed}
+            markItemCompleted={this.props.markItemCompleted}
+          />
+        ))}
+      </Box>
+    )
   }
 }
 
